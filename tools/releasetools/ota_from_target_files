@@ -418,45 +418,49 @@ def WriteFullOTAPackage(input_zip, output_zip):
   if OPTIONS.wipe_user_data:
     script.FormatPartition("/data")
 
-  script.Print("                                        ");
-  script.Print("                8OOOO8                  ");
-  script.Print("           88888O88O888888D             ");
-  script.Print("         88888888888888888888           ");
-  script.Print("       8888888888888888888888D8         ");
-  script.Print("     8DD8888888888888888888D8DDD        ");
-  script.Print("    DDDDDD8888888888888888DDDD          ");
-  script.Print("   DDDDDDDD8           NDDDD8           ");
-  script.Print("   DDDDDD                 D             ");
-  script.Print("  DDDDDD N                              ");
-  script.Print("  DDDD  NN                              ");
-  script.Print("  NND  NNN                              ");
-  script.Print("  NNN NNNN                              ");
-  script.Print("  NN  NNNN                              ");
-  script.Print("  NN NNNNDN                             ");
-  script.Print("   N NNNDNN8                        D   ");
-  script.Print("   N NNDN  D8                     NN    ");
-  script.Print("    N 8  D8  DD                  DD8    ");
-  script.Print("      NNN   DD  DN                      ");
-  script.Print("          DDN  DDN  NDDDDD              ");
-  script.Print("         NNN  NDD8   DDDDDD             ");
-  script.Print("              DDD    DDDDDDD            ");
-  script.Print("              DDD    DDDDND             ");
-  script.Print("                                        ");
-  script.Print("                                        ");
-
-  script.Print("Erasing System...")
+  script.ShowProgress(0.5, 0)
+  script.Print("")
+  script.Print("")
+  script.Print(" ___ _____ __  __  _____ _   _ _____ _____ ___  ")
+  script.Print("| _ \  ___|  \/  ||  ___| \ | |_   _|  ___| _ \ ")
+  script.Print("|| || |__ | .  . || |__ |  \| | | | | |__ || || ")
+  script.Print("|| ||  __|| |\/| ||  __|| . ` | | | |  __||| || ")
+  script.Print("||//| |___| |  | || |___| |\  | | | | |___||//  ")
+  script.Print("|_/ \____/\_|  |_/\____/\_| \_/ \_/ \____/|_/   ")
+  script.Print("")                                               
+  script.Print("          ___ _____   ____ _____ ___            ")
+  script.Print("         | _ \ ___ \ / _  |_   _| _ \	        ")
+  script.Print("         || || |_/ // | | | | | || ||           ")
+  script.Print("         || ||    / | | | | | | || ||           ")
+  script.Print("         ||//| |\ \ \ \_/ /_| |_||//            ") 
+  script.Print("         |_/ \_| \_| \___/ \___/|_/             ")  
+  script.Print("")
+  script.Print("              ___   _____   _____               ")
+  script.Print("             /   | / __  \ / __  \              ")
+  script.Print("            / /| | `' / /' `' / /'              ")
+  script.Print("           / /_| |   / /     / /                ")  
+  script.Print("           \___  |_./ /____./ /___              ")
+  script.Print("               |_(_)_____(_)_____/              ")
+  script.Print("")
+  script.Print("")
+  script.Print("")
+  script.Print("{x}...Formatting system partition...")
+  script.Print("")
 
   if "selinux_fc" in OPTIONS.info_dict:
     WritePolicyConfig(OPTIONS.info_dict["selinux_fc"], output_zip)
 
   script.FormatPartition("/system")
-  script.Print("Mounting System...")
   script.Mount("/system")
   script.ShowProgress(0.5, 40)
-  script.Print("Installing System...")
-  script.UnpackPackageDir("system", "/system")
-  script.Print("Creating Symlinks...") 
+  script.Print("{x}...Installing System...")
+  script.Print("")
+  script.UnpackPackageDir("system", "/system") 
 
+  script.Print("{x}...Creating Symlinks...")
+  script.Print("")
+  script.Print("{x}...Setting Permissions...")
+  script.Print("")
   symlinks = CopySystemFiles(input_zip, output_zip)
   script.MakeSymlinks(symlinks)
 
@@ -475,10 +479,13 @@ def WriteFullOTAPackage(input_zip, output_zip):
     script.RunBackup("restore")
 
   script.ShowProgress(0.2, 10)
+  script.Print("{x}...Flashing Kernel...")
+  script.Print("")
   script.WriteRawImage("/boot", "boot.img")
 
   script.ShowProgress(0.1, 0)
-  script.Print("Installation Completed!")
+  script.Print("{x}...Installation Complete!")
+  script.Print("")
   device_specific.FullOTA_InstallEnd()
 
   if OPTIONS.extra_script is not None:
