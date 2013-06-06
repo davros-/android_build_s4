@@ -61,8 +61,8 @@ function check_product()
         return
     fi
 
-    if (echo -n $1 | grep -q -e "^DEMENTED_") ; then
-       DEMENTED_BUILD=$(echo -n $1 | sed -e 's/^DEMENTED_//g')
+    if (echo -n $1 | grep -q -e "^demented_") ; then
+       DEMENTED_BUILD=$(echo -n $1 | sed -e 's/^demented_//g')
     else
        DEMENTED_BUILD=
     fi
