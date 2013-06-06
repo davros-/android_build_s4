@@ -481,7 +481,7 @@ function brunch()
 {
     breakfast $*
     if [ $? -eq 0 ]; then
-        mka DEMENTED
+        mka demented
     else
         echo "No such item in brunch menu. Try 'breakfast'"
         return 1
@@ -512,7 +512,7 @@ function breakfast()
             lunch $target
         else
             # This is probably just the DEMENTED model name
-            lunch DEMENTED_$target-userdebug
+            lunch demented_$target-userdebug
         fi
     fi
     return $?
@@ -663,7 +663,7 @@ function eat()
             done
             echo "Device Found.."
         fi
-    if (adb shell cat /system/build.prop | grep -q "ro.DEMENTED.device=$DEMENTED_BUILD");
+    if (adb shell cat /system/build.prop | grep -q "ro.demented.device=$DEMENTED_BUILD");
     then
         # if adbd isn't root we can't write to /cache/recovery/
         adb root
@@ -1274,7 +1274,7 @@ function lska() {
     if [ ! -z "$1" ]; then
         for i in "$@"; do
             case $i in
-                DEMENTED|otapackage|systemimage)
+                demented|otapackage|systemimage)
                     mka installclean
                     mka $i
                     ;;
