@@ -61,12 +61,12 @@ function check_product()
         return
     fi
 
-    if (echo -n $1 | grep -q -e "^demented_") ; then
-       DEMENTED_BUILD=$(echo -n $1 | sed -e 's/^demented_//g')
+    if (echo -n $1 | grep -q -e "^Droid_Concepts_") ; then
+       Droid_Concepts_BUILD=$(echo -n $1 | sed -e 's/^Droid_Concepts_//g')
     else
-       DEMENTED_BUILD=
+       Droid_Concepts_BUILD=
     fi
-    export DEMENTED_BUILD
+    export Droid_Concepts_BUILD
 
     CALLED_FROM_SETUP=true BUILD_SYSTEM=build/core \
         TARGET_PRODUCT=$1 \
@@ -456,7 +456,7 @@ function print_lunch_menu()
     echo
     echo "You're building on" $uname
     echo
-    if [ "z${DEMENTED_DEVICES_ONLY}" != "z" ]; then
+    if [ "z${Droid_Concepts_DEVICES_ONLY}" != "z" ]; then
        echo "Breakfast menu... pick a combo:"
     else
        echo "Lunch menu... pick a combo:"
@@ -470,7 +470,7 @@ function print_lunch_menu()
         i=$(($i+1))
     done
 
-    if [ "z${DEMENTED_DEVICES_ONLY}" != "z" ]; then
+    if [ "z${Droid_Concepts_DEVICES_ONLY}" != "z" ]; then
        echo "... and don't forget the bacon!"
     fi
 
@@ -481,7 +481,7 @@ function brunch()
 {
     breakfast $*
     if [ $? -eq 0 ]; then
-        mka demented
+        mka Droid_Concepts
     else
         echo "No such item in brunch menu. Try 'breakfast'"
         return 1
@@ -492,10 +492,10 @@ function brunch()
 function breakfast()
 {
     target=$1
-    DEMENTED_DEVICES_ONLY="true"
+    Droid_Concepts_DEVICES_ONLY="true"
     unset LUNCH_MENU_CHOICES
     add_lunch_combo full-eng
-    for f in `/bin/ls vendor/DEMENTED/vendorsetup.sh 2> /dev/null`
+    for f in `/bin/ls vendor/Droid_Concepts/vendorsetup.sh 2> /dev/null`
         do
             echo "including $f"
             . $f
@@ -511,8 +511,8 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the DEMENTED model name
-            lunch demented_$target-userdebug
+            # This is probably just the Droid_Concepts model name
+            lunch Droid_Concepts_$target-userdebug
         fi
     fi
     return $?
@@ -647,8 +647,8 @@ function tapas()
 function eat()
 {
     if [ "$OUT" ] ; then
-        MODVERSION=$(get_build_var DEMENTED_VERSION)
-        ZIPFILE=DEMENTED-$MODVERSION.zip
+        MODVERSION=$(get_build_var Droid_Concepts_VERSION)
+        ZIPFILE=Droid_Concepts-$MODVERSION.zip
         ZIPPATH=$OUT/$ZIPFILE
         if [ ! -f $ZIPPATH ] ; then
             echo "Nothing to eat"
@@ -663,7 +663,7 @@ function eat()
             done
             echo "Device Found.."
         fi
-    if (adb shell cat /system/build.prop | grep -q "ro.demented.device=$DEMENTED_BUILD");
+    if (adb shell cat /system/build.prop | grep -q "ro.Droid_Concepts.device=$Droid_Concepts_BUILD");
     then
         # if adbd isn't root we can't write to /cache/recovery/
         adb root
@@ -688,7 +688,7 @@ EOF
     fi
     return $?
     else
-        echo "The connected device does not appear to be $DEMENTED_BUILD, run away!"
+        echo "The connected device does not appear to be $Droid_Concepts_BUILD, run away!"
     fi
 }
 
@@ -1274,7 +1274,7 @@ function lska() {
     if [ ! -z "$1" ]; then
         for i in "$@"; do
             case $i in
-                demented|otapackage|systemimage)
+                Droid_Concepts|otapackage|systemimage)
                     mka installclean
                     mka $i
                     ;;
