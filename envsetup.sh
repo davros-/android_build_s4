@@ -61,12 +61,12 @@ function check_product()
         return
     fi
 
-    if (echo -n $1 | grep -q -e "^Droid_Concepts_") ; then
-       Droid_Concepts_BUILD=$(echo -n $1 | sed -e 's/^Droid_Concepts_//g')
+    if (echo -n $1 | grep -q -e "^droid_concepts_") ; then
+       DROID_CONCEPTS_BUILD=$(echo -n $1 | sed -e 's/^droid_concepts_//g')
     else
-       Droid_Concepts_BUILD=
+       DROID_CONCEPTS_BUILD=
     fi
-    export Droid_Concepts_BUILD
+    export DROID_CONCEPTS_BUILD
 
     CALLED_FROM_SETUP=true BUILD_SYSTEM=build/core \
         TARGET_PRODUCT=$1 \
@@ -456,7 +456,7 @@ function print_lunch_menu()
     echo
     echo "You're building on" $uname
     echo
-    if [ "z${Droid_Concepts_DEVICES_ONLY}" != "z" ]; then
+    if [ "z${DROID_CONCEPTS_DEVICES_ONLY}" != "z" ]; then
        echo "Breakfast menu... pick a combo:"
     else
        echo "Lunch menu... pick a combo:"
@@ -470,7 +470,7 @@ function print_lunch_menu()
         i=$(($i+1))
     done
 
-    if [ "z${Droid_Concepts_DEVICES_ONLY}" != "z" ]; then
+    if [ "z${DROID_CONCEPTS_DEVICES_ONLY}" != "z" ]; then
        echo "... and don't forget the bacon!"
     fi
 
@@ -492,7 +492,7 @@ function brunch()
 function breakfast()
 {
     target=$1
-    Droid_Concepts_DEVICES_ONLY="true"
+    DROID_CONCEPTS_DEVICES_ONLY="true"
     unset LUNCH_MENU_CHOICES
     add_lunch_combo full-eng
     for f in `/bin/ls vendor/Droid_Concepts/vendorsetup.sh 2> /dev/null`
@@ -647,7 +647,7 @@ function tapas()
 function eat()
 {
     if [ "$OUT" ] ; then
-        MODVERSION=$(get_build_var Droid_Concepts_VERSION)
+        MODVERSION=$(get_build_var DROID_CONCEPTS_VERSION)
         ZIPFILE=Droid_Concepts-$MODVERSION.zip
         ZIPPATH=$OUT/$ZIPFILE
         if [ ! -f $ZIPPATH ] ; then
@@ -663,7 +663,7 @@ function eat()
             done
             echo "Device Found.."
         fi
-    if (adb shell cat /system/build.prop | grep -q "ro.droid_concepts.device=$Droid_Concepts_BUILD");
+    if (adb shell cat /system/build.prop | grep -q "ro.droid_concepts.device=$DROID_CONCEPTS_BUILD");
     then
         # if adbd isn't root we can't write to /cache/recovery/
         adb root
@@ -688,7 +688,7 @@ EOF
     fi
     return $?
     else
-        echo "The connected device does not appear to be $Droid_Concepts_BUILD, run away!"
+        echo "The connected device does not appear to be $DROID_CONCEPTS_BUILD, run away!"
     fi
 }
 
