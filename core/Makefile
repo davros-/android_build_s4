@@ -1310,7 +1310,7 @@ else
     $(INTERNAL_OTA_PACKAGE_TARGET): skip_assert := false
 endif
 
-ifeq ($(Droid_Concepts_BUILD),true)
+ifeq ($(DROID_CONCEPTS_BUILD),true)
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
 else
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
